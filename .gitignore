@@ -1,0 +1,30 @@
+###> inetum-orleans/docker-devbox ###
+/.bin/mysql
+/.bin/mysqldump
+/.bin/conventional-changelog
+/.bin/node
+/.bin/npm
+/.bin/npx
+/.bin/start-storybook
+/.bin/webpack-cli
+/.bin/webpack
+/.bin/yarn
+/.bin/composer
+/.bin/php
+/.bin/phpcbf
+/.bin/phpcs
+/.bin/rector
+/.bin/robo
+/docker-compose.yml
+/.docker/db/Dockerfile
+/.docker/web/Dockerfile
+/.docker/node/Dockerfile
+/.docker/php/Dockerfile
+/.docker/mail/Dockerfile
+/*ddb.local.*
+/.bash_enter
+/.bash_leave
+/.bin/symfony
+/Makefile
+/.docker/web/apache.conf
+###< inetum-orleans/docker-devbox ###

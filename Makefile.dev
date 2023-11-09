@@ -1,0 +1,9 @@
+# Initialisation du projet
+up:
+	echo "\n\033[33mLancement des conteneurs\033[39m"
+	dc up -d && make start
+
+# Lancement du serveur Symfony
+start:
+	echo "\n\033[33mLancement du serveur Symfony...\033[39m"
+	symfony server:start -d

@@ -1,0 +1,28 @@
+copy:
+  specs:
+    - source: .ca-certificates/*.crt
+      destination: .ca-certificates
+      dispatch:
+        - ".docker/*"
+core:
+  domain:
+    sub: sf6
+  env:
+    available:
+      - prod
+      - recette
+      - dev
+docker:
+  port_prefix: 552
+  cache_from_image: true
+  build_image_tag_from_version: false
+file:
+  excludes:
+    - '**/_*'
+    - '**/.git'
+    - '**/node_modules'
+    - '**/vendor'
+symlinks:
+  excludes:
+    - 'web/sites/default/settings.*'
+    - 'web/modules/update/tests/drupal.xml'
