@@ -1,3 +1,5 @@
+/.idea/
+
 ###> inetum-orleans/docker-devbox ###
 /.bin/mysql
 /.bin/mysqldump
@@ -28,3 +30,18 @@
 /Makefile
 /.docker/web/apache.conf
 ###< inetum-orleans/docker-devbox ###
+
+###> symfony/framework-bundle ###
+/web/.env.local
+/web/.env.local.php
+/web/.env.*.local
+/web/config/secrets/prod/prod.decrypt.private.php
+/web/public/bundles/
+/web/var/
+/web/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/web/phpunit.xml
+/web/.phpunit.result.cache
+###< phpunit/phpunit ###
