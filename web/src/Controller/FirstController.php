@@ -2,18 +2,30 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function Symfony\Component\String\u;
 
-class FirstController {
+class FirstController extends AbstractController {
 
     /**
      * @return Response
      */
     #[Route('/')]
     final public function homepage(): Response {
-        return new Response('<h1>Yo</h1><p>Ceci est un contenu</p>');
+
+        $tracks = [
+            ['song' => 'skfdsoifdsoihfdsoi', 'artist' => 'jsoijdsqojidsqoijodq pq'],
+            ['song' => 'qsd qs dsq q', 'artist' => 'fddfgfgfdgfdgfdg654g9d84fg9d84 pq'],
+            ['song' => 'skfdsoifdqs', 'artist' => 'dfh dfhdf d fh dhd pq'],
+            ['song' => 'sffdh hddh', 'artist' => 'dfhd dfh pq'],
+        ];
+
+        return $this->render('first/homepage.html.twig', [
+            'title' => 'Coucou',
+            'tracks' => $tracks,
+        ]);
     }
 
     /**
