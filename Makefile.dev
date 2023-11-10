@@ -1,7 +1,11 @@
 # Initialisation du projet
-up:
+init:
 	echo "\n\033[33mLancement des conteneurs\033[39m"
-	dc up -d && make start
+	dc build
+	echo "\n\033[33mLancement des conteneurs\033[39m"
+	dc up -d
+	echo "\n\033[33mInstallation des dépendances\033[39m"
+	dc exec php bash -c "cd web && composer install" && make start
 
 # Lancement du serveur Symfony
 start:
