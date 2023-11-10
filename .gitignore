@@ -44,4 +44,11 @@
 /web/.phpunit.result.cache
 ###< phpunit/phpunit ###
 
+###> symfony/webpack-encore-bundle ###
+/web/node_modules/
+/web/public/build/
+/web/npm-debug.log
+/web/yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
 /.idea/

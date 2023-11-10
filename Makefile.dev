@@ -1,3 +1,5 @@
+args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
+
 # Initialisation du projet
 init:
 	echo "\n\033[33mLancement des conteneurs\033[39m"
@@ -11,3 +13,7 @@ init:
 start:
 	echo "\n\033[33mLancement du serveur Symfony...\033[39m"
 	symfony server:start -d
+
+# PHP Bash
+php:
+	dc exec php bash
