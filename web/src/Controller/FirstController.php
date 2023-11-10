@@ -22,6 +22,8 @@ class FirstController extends AbstractController {
             ['song' => 'sffdh hddh', 'artist' => 'dfhd dfh pq'],
         ];
 
+        dump($tracks);
+
         return $this->render('first/homepage.html.twig', [
             'title' => 'Coucou',
             'tracks' => $tracks,
@@ -34,11 +36,8 @@ class FirstController extends AbstractController {
      */
     #[Route('/browse/{genre}')]
     final public function browse(string $genre = ''): Response {
-        if ($genre) {
-            $title = u(str_replace('-', ' ', $genre))->title();
-        } else {
-            $title = "All genres";
-        }
-        return new Response($title);
+        return $this->render('first/browse.html.twig', [
+            'genre' => $genre ? u(str_replace('-', ' ', $genre))->title() : null,
+        ]);
     }
 }
