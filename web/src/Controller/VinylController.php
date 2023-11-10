@@ -7,12 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function Symfony\Component\String\u;
 
-class FirstController extends AbstractController {
+class VinylController extends AbstractController {
 
     /**
      * @return Response
      */
-    #[Route('/')]
+    #[Route('/', name: 'app_homepage')]
     final public function homepage(): Response {
 
         $tracks = [
@@ -24,8 +24,8 @@ class FirstController extends AbstractController {
 
         dump($tracks);
 
-        return $this->render('first/homepage.html.twig', [
-            'title' => 'Coucou',
+        return $this->render('vinyl/homepage.html.twig', [
+            'title' => 'Bienvenue sur Mixed Vinyl !',
             'tracks' => $tracks,
         ]);
     }
@@ -34,9 +34,9 @@ class FirstController extends AbstractController {
      * @param string $genre
      * @return Response
      */
-    #[Route('/browse/{genre}')]
+    #[Route('/browse/{genre}', name: 'app_browse')]
     final public function browse(string $genre = ''): Response {
-        return $this->render('first/browse.html.twig', [
+        return $this->render('vinyl/browse.html.twig', [
             'genre' => $genre ? u(str_replace('-', ' ', $genre))->title() : null,
         ]);
     }
