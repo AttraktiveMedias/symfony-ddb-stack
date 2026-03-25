@@ -5,6 +5,11 @@ init:
 	echo "\n\033[33mLancement des conteneurs\033[39m"
 	dc up -d
 
+# Requirements check
+check:
+	echo "\n\033[33mContrôle de la configuration\033[39m"
+	symfony check:requirements
+
 # Symfony project creation
 create-sf-project:
 	echo "\n\033[33mCréation du projet Symfony...\033[39m"
