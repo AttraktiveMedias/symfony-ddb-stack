@@ -2,7 +2,7 @@ args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
 
 # Initialisation du projet
 init:
-	echo "\n\033[33mLancement des conteneurs\033[39m"
+	echo "\n\033[33mBuild des conteneurs\033[39m"
 	dc build
 	echo "\n\033[33mLancement des conteneurs\033[39m"
 	dc up -d

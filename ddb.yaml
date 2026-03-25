@@ -6,7 +6,7 @@ copy:
         - ".docker/*"
 core:
   domain:
-    sub: sf6
+    sub: sf7-start
   env:
     available:
       - prod

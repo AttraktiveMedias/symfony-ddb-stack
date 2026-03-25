@@ -27,6 +27,14 @@
 /.bin/symfony
 /Makefile
 /.docker/web/apache.conf
+/.docker/php/sf7-start-php.ini
+/.certs/live.sf7-start.test.key
+/.certs/live.sf7-start.test.crt
+/.certs/.signer.crt
+/.certs/dev.sf7-start.test.key
+/.certs/dev.sf7-start.test.crt
+/.certs/sf7-start.test.key
+/.certs/sf7-start.test.crt
 ###< inetum-orleans/docker-devbox ###
 
 ###> symfony/framework-bundle ###
