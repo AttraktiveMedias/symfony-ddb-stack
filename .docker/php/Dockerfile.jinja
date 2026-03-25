@@ -1,80 +1,64 @@
-FROM php:8.1-fpm-alpine
-LABEL maintainer="attraktive.medias@gmail.com <attraktive.medias@gmail.com>"
+FROM php:8.2-fpm-alpine
 
-# Version des dépendances
-ENV CURL_VERSION 7.80.0-r0
-ENV JPEG_VERSION 2.1.5.1-r3
-ENV PNG_VERSION 1.6.39-r3
-ENV FREETYPE_VERSION 2.13.0-r5
-ENV SSL_VERSION 1.1.1l-r8
-ENV PGSQL_VERSION 13.5-r0
-ENV PHP_ZIP_VERSION 1.9.2-r2
-ENV MYSQL_VERSION 10.11.5-r0
-ENV PATCH_VERSION 2.7.6-r10
-ENV ZIP_VERSION 3.0-r12
-ENV UNZIP_VERSION 6.0-r14
-ENV GIT_VERSION 2.40.1-r0
-ENV COMPOSER_HOME /composer
-ENV PATH /composer/vendor/bin:$PATH
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Composer environment variables
+ENV COMPOSER_HOME=/composer \
+    PATH=/composer/vendor/bin:$PATH \
+    COMPOSER_ALLOW_SUPERUSER=1
 
-RUN apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} oniguruma-dev
+# System dependencies and common PHP extensions
+RUN apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+        icu-dev \
+        libxml2-dev \
+        libxslt-dev \
+        sqlite-dev \
+        freetype-dev \
+        libpng-dev \
+        libjpeg-turbo-dev \
+        libzip-dev \
+        linux-headers \
+        libsodium-dev \
+        oniguruma-dev \
+    && apk add --no-cache \
+        bash \
+        git \
+        mariadb-client \
+        libwebp-dev \
+        ca-certificates \
+        icu-libs \
+        libxslt \
+        libzip \
+    && docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg \
+    && docker-php-ext-install \
+        intl \
+        mbstring \
+        pdo \
+        pdo_sqlite \
+        simplexml \
+        sodium \
+        xml \
+        xmlwriter \
+        zip \
+        xsl \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && apk del .build-deps
 
-# Addition of PHP-GD
-RUN apk add --no-cache freetype=${FREETYPE_VERSION} libpng=${PNG_VERSION} libjpeg-turbo=${JPEG_VERSION} freetype-dev=${FREETYPE_VERSION} libpng-dev=${PNG_VERSION} libjpeg-turbo-dev=${JPEG_VERSION} \
-&& docker-php-ext-configure gd --enable-gd --with-jpeg --with-freetype \
-&& docker-php-ext-install gd
-
-# Addition of PHP-ZIP
-RUN apk add --no-cache libzip-dev=${PHP_ZIP_VERSION} \
-&& docker-php-ext-configure zip \
-&& docker-php-ext-install zip
-
-# Addition of OP Cache
-RUN docker-php-ext-install opcache mbstring
-
-# Addition of bcmath
-RUN docker-php-ext-install bcmath
-
-COPY tools /tools
-RUN chmod +x /tools/*.sh
-
-RUN apk del -f .build-deps
-
-# Configuration de composer
+# Install Composer 2
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-RUN mkdir -p "$COMPOSER_HOME/cache" \
-&& mkdir -p "$COMPOSER_HOME/vendor" \
-&& chown -R www-data:www-data "$COMPOSER_HOME" \
-&& chown -R www-data:www-data /var/www
+# Install Symfony CLI
+RUN apk add --no-cache openssl \
+    && update-ca-certificates \
+    && wget https://get.symfony.com/cli/installer -O - | bash \
+    && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
-RUN apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} oniguruma-dev \
-&& docker-php-ext-install pdo pdo_mysql \
-&& apk add --no-cache mariadb-client=${MYSQL_VERSION} \
-&& apk del -f .build-deps
+# Configuration fixuid
+ADD fixuid.tar.gz /usr/local/bin
+RUN chown root:root /usr/local/bin/fixuid && chmod 4755 /usr/local/bin/fixuid && mkdir -p /etc/fixuid
+COPY fixuid.yml /etc/fixuid/config.yml
 
-RUN apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} \
-&& apk add --update linux-headers \
-&& pecl install xdebug && docker-php-ext-enable xdebug \
-&& apk del -f .build-deps
+# Custom PHP configuration
+COPY sf7-start-php.ini /usr/local/etc/php/php.ini
 
-RUN apk add --no-cache \
-        freetype-dev \
-        libjpeg-turbo-dev \
-        libwebp-dev \
-        libpng-dev
-
-# Apk install
-RUN apk --no-cache update && apk --no-cache add bash git  
-
-# Symfony CLI
-RUN wget https://get.symfony.com/cli/installer -O - | bash && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
-
-RUN docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg && \
-    docker-php-ext-install gd
-
-RUN /tools/install-pdo_mysql.sh \
-    && /tools/install-git.sh
-  
 WORKDIR /var/www/html

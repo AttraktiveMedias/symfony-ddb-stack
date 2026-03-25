@@ -1,6 +1,13 @@
 ###> inetum-orleans/docker-devbox ###
+/*ddb.local.*
+/Makefile
+/.docker/php/sf7-start-php.ini
+/.docker/web/apache.conf
 /.bin/mysql
 /.bin/mysqldump
+/.certs/live.sf7-start.test.key
+/.certs/live.sf7-start.test.crt
+/.certs/.signer.crt
 /.bin/conventional-changelog
 /.bin/node
 /.bin/npm
@@ -15,18 +22,19 @@
 /.bin/phpcs
 /.bin/rector
 /.bin/robo
+/.bin/symfony
+/.certs/dev.sf7-start.test.key
+/.certs/dev.sf7-start.test.crt
+/.certs/sf7-start.test.key
+/.certs/sf7-start.test.crt
 /docker-compose.yml
-/.docker/db/Dockerfile
-/.docker/web/Dockerfile
 /.docker/node/Dockerfile
+/.docker/web/Dockerfile
 /.docker/php/Dockerfile
+/.docker/db/Dockerfile
 /.docker/mail/Dockerfile
-/*ddb.local.*
 /.bash_enter
 /.bash_leave
-/.bin/symfony
-/Makefile
-/.docker/web/apache.conf
 ###< inetum-orleans/docker-devbox ###
 
 ###> symfony/framework-bundle ###

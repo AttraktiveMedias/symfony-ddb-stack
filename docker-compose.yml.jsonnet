@@ -10,8 +10,8 @@ local app_workdir = "/app";
 
 # Objet de la base de données
 local db = {
-    password: 'sf6',
-    root_password: 'sf6',
+    password: 'sf7-start',
+    root_password: 'sf7-start',
     user: self.password
 };
 
@@ -30,7 +30,7 @@ ddb.Compose() {
                 {
                     volumes+: [
                         ddb.path.project + ":/var/www/html",
-                        ddb.path.project + "/.docker/php/sf6-php.ini:/usr/local/etc/php/conf.d/php-config.ini",
+                        ddb.path.project + "/.docker/php/sf7-start-php.ini:/usr/local/etc/php/conf.d/php-config.ini",
                         ddb.path.project + "/.docker/php/msmtprc:/etc/msmtprc",
                         "php-composer-cache:/composer/cache",
                         "php-composer-vendor:/composer/vendor"
@@ -38,19 +38,19 @@ ddb.Compose() {
                 },
           db: ddb.Build("db") +
     	    ddb.User() +
-            ddb.Binary("mysql", "/workdir", "mysql -h db-sf6 -u sf6 -p sf6 -D sf6") +
-            ddb.Binary("mysqldump", "/workdir", "mysqldump -h db-sf6 -u sf6 -p sf6 -D sf6") +
+            ddb.Binary("mysql", "/workdir", "mysql -h db-sf7-start -u sf7-start -p sf7-start -D sf7-start") +
+            ddb.Binary("mysqldump", "/workdir", "mysqldump -h db-sf7-start -u sf7-start -p sf7-start -D sf7-start") +
             ddb.Expose("3306", "51") +
             {
                 environment+: {
-                    MYSQL_ROOT_PASSWORD: "sf6",
-                    MYSQL_DATABASE: "sf6",
-                    MYSQL_USER: "sf6",
-                    MYSQL_PASSWORD: "sf6"
+                    MYSQL_ROOT_PASSWORD: "sf7-start",
+                    MYSQL_DATABASE: "sf7-start",
+                    MYSQL_USER: "sf7-start",
+                    MYSQL_PASSWORD: "sf7-start"
                 },
                 volumes+: [
                     ddb.path.project + ":/workdir",
-                    "db-sf6-data:/var/lib/mysql"
+                    "db-sf7-start-data:/var/lib/mysql"
                 ]
             },
         web:    ddb.Build("web") +
