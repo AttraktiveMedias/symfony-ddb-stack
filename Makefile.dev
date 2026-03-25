@@ -1,19 +1,12 @@
-args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
-
-# Initialisation du projet
+# Containers management
 init:
 	echo "\n\033[33mBuild des conteneurs\033[39m"
 	dc build
 	echo "\n\033[33mLancement des conteneurs\033[39m"
 	dc up -d
-	echo "\n\033[33mInstallation des dépendances\033[39m"
-	dc exec php bash -c "cd web && composer install" && make start
 
-# Lancement du serveur Symfony
-start:
-	echo "\n\033[33mLancement du serveur Symfony...\033[39m"
-	symfony server:start -d
-
-# PHP Bash
-php:
-	dc exec php bash
+# Symfony project creation
+create-sf-project:
+	echo "\n\033[33mCréation du projet Symfony...\033[39m"
+	rm -rf web/*
+	symfony new web --version="7.4.*" --webapp
