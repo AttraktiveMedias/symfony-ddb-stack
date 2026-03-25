@@ -26,7 +26,6 @@ ddb configure
 Lancer la command `make init` pour : 
 * Build les conteneurs Docker
 * Lancer les conteneurs Docker
-* 
 ```
 make init
 ```
