@@ -31,6 +31,14 @@ Lancer la command `make init` pour :
 make init
 ```
 
+### Checker la configuration
+
+Utiliser la command `make check` pour confirmer que les pré-requis pour un projet symfony sont ok :
+
+```
+make check
+```
+
 ### Lancer/utiliser le projet
 Le projet (vide pour l'instant) est accessible à l'adresse https://sf7-start.test
 
